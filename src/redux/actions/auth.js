@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AUTH_SUCCESS } from "./actionTypes";
+import { AUTH_SUCCESS, LOG_OUT } from "./actionTypes";
 
 export const auth = (email, password, isLogIn, username) => {
   return async (dispatch) => {
@@ -21,7 +21,7 @@ export const auth = (email, password, isLogIn, username) => {
       localStorage.setItem("userId", id);
       dispatch(authSuccess(username, email, token, id));
     } catch (err) {
-      console.log("Error", err.header);
+      console.log("Error", err.header); // экшен и редюсер для неудачного запроса
     }
   };
 };
@@ -30,5 +30,11 @@ export const authSuccess = (username, email, token, id, isLogIn = true) => {
   return {
     type: AUTH_SUCCESS,
     payload: { username, email, token, id, isLogIn },
+  };
+};
+
+export const logOut = () => {
+  return {
+    type: LOG_OUT,
   };
 };
