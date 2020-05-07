@@ -1,79 +1,69 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Input, Button } from "antd";
-import axios from "axios";
-import { NavLink } from "react-router-dom";
-import { logIn } from "../../redux/actions";
+import { NavLink, Redirect } from "react-router-dom";
+import { auth } from "../../redux/actions/auth";
+
+const defaultState = { email: "", password: "" };
 
 const AuthForm = (props) => {
-  const [fieldsData, setFieldsData] = useState({
-    email: "",
-    password: "",
-  });
+  const [fieldsData, setFieldsData] = useState(defaultState);
 
   const changeHandler = (fieldname) => (evt) => {
     const { value } = evt.target;
     setFieldsData({ ...fieldsData, [fieldname]: value });
   };
 
-  const submitHandler = async (evt) => {
+  const submitHandler = (evt) => {
     evt.preventDefault();
-    try {
-      const req = await axios.post(
-        "https://conduit.productionready.io/api/users/login",
-        {
-          user: fieldsData,
-        }
-      );
-      const { username, email, token } = req.data.user;
-      props.logIn(username, email, token);
-    } catch (err) {
-      console.log("Error", err.header);
-    }
+    const { email, password } = fieldsData;
+    props.auth(email, password, true);
+    setFieldsData(defaultState);
   };
 
-  return (
-    <div className="FormWrapper">
-      <form className="Form" onSubmit={submitHandler}>
-        <fieldset className="Form-Group">
-          <Input
-            className="Form-Field"
-            type="email"
-            placeholder="Email"
-            value={fieldsData.email}
-            onChange={changeHandler("email")}
-          />
+  const rendered = (isAuth) => {
+    if (isAuth) {
+      return <Redirect to="/"></Redirect>;
+    }
+    return (
+      <div className="FormWrapper">
+        <form className="Form" onSubmit={submitHandler}>
+          <fieldset className="Form-Group">
+            <Input
+              className="Form-Field"
+              type="email"
+              placeholder="Email"
+              value={fieldsData.email}
+              onChange={changeHandler("email")}
+            />
 
-          <Input
-            className="Form-Field"
-            type="password"
-            placeholder="Password"
-            value={fieldsData.password}
-            onChange={changeHandler("password")}
-          />
+            <Input
+              className="Form-Field"
+              type="password"
+              placeholder="Password"
+              value={fieldsData.password}
+              onChange={changeHandler("password")}
+            />
 
-          <Button className="SubmitBtn" type="primary" htmlType="submit">
-            Log in
-          </Button>
-        </fieldset>
-      </form>
-      <NavLink to="/signup">Sign Up</NavLink>
-    </div>
-  );
+            <Button className="SubmitBtn" type="primary" htmlType="submit">
+              Log in
+            </Button>
+          </fieldset>
+        </form>
+        <NavLink to="/signup">Sign Up</NavLink>
+      </div>
+    );
+  };
+
+  return rendered(props.isAuth);
 };
 
-const mapStateToProps = (props) => {
-  const { user, token, email, isLogIn } = props;
-  return {
-    user,
-    token,
-    email,
-    isLogIn,
-  };
+const mapStateToProps = (state) => {
+  return { isAuth: !!state.auth.token };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  logIn: (user, email, token) => dispatch(logIn(user, email, token)),
+  auth: (email, password, isLogIn) => dispatch(auth(email, password, isLogIn)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthForm);
