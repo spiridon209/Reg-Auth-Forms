@@ -25,8 +25,19 @@
   flex-direction: column;
   justify-content: space-between;
   flex-wrap: wrap;
+  align-items: stretch;
+
+  &-Field {
+    margin: 0 5px 5px 5px;
+  }
+
+  &-Label {
+    margin-bottom: 5px;
+  }
 }
 
-.Form-Field {
-  margin: 5px;
+.Btn {
+  margin-bottom: 5px;
+  border-radius: 3px;
+  align-self: center;
 }

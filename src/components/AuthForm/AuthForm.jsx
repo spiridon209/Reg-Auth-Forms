@@ -1,101 +1,115 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Input, Button } from "antd";
 import { NavLink, Redirect } from "react-router-dom";
 import { auth } from "../../redux/actions/auth";
+import { Formik, Form } from "formik";
+import formSchema from "./formSchema";
 
-const defaultState = { email: "", password: "" };
+const initialValues = { email: "", password: "" };
 
 const AuthForm = (props) => {
-  const [fieldsData, setFieldsData] = useState(defaultState);
+  const renderInput = (
+    name,
+    type,
+    label,
+    values,
+    handleChange,
+    handleBlur,
+    errors,
+    touched
+  ) => (
+    <label className="Form-Label" htmlFor={name}>
+      {`${label}`}
+      <Input
+        className="Form-Field"
+        type={type}
+        name={name}
+        placeholder={label}
+        id={name}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values[name]}
+        style={touched[name] && errors[name] ? { borderColor: "red" } : {}} //
+      />
+      {touched[name] && errors[name] && (
+        <div className="Form-RequredField">{errors[name]}</div>
+      )}
+    </label>
+  );
 
-  const renderErrors = (err) => {
-    if (err === null) {
-      return err;
-    }
-
-    let errorsList = [];
-
-    for (let key in err) {
-      errorsList.push(<li key={key}>{`${key}:${err[key]}`}</li>);
-    }
-
-    // if (err[name] === undefined) {
-    //   return null;
-    // }
-
-    return (
-      <div className="Errors">
-        <ul>{errorsList}</ul>
-      </div>
-    );
-  };
-
-  const changeHandler = (fieldname) => (evt) => {
-    const { value } = evt.target;
-    setFieldsData({ ...fieldsData, [fieldname]: value });
-  };
-
-  const submitHandler = (evt) => {
-    evt.preventDefault();
-    const { email, password } = fieldsData;
-    props.auth(email, password, true);
-    setFieldsData(defaultState);
-  };
-
-  const rendered = (isAuth) => {
+  const renderForm = (isAuth) => {
     if (isAuth) {
       return <Redirect to="/"></Redirect>;
     }
     return (
       <>
-        <h1>Login Page</h1>
+        <h1>Signup Page</h1>
         <div className="FormWrapper">
-          <form className="Form" onSubmit={submitHandler}>
-            <fieldset className="Form-Group">
-              <Input
-                className="Form-Field"
-                type="email"
-                placeholder="Email"
-                value={fieldsData.email}
-                onChange={changeHandler("email")}
-                required
-              />
-
-              <Input
-                className="Form-Field"
-                type="password"
-                placeholder="Password"
-                value={fieldsData.password}
-                onChange={changeHandler("password")}
-                required
-              />
-
-              <Button
-                loading={props.isProcessing}
-                className="SubmitBtn Btn"
-                type="primary"
-                htmlType="submit"
-              >
-                Log in
-              </Button>
-              {renderErrors(props.errors)}
-            </fieldset>
-          </form>
-          <NavLink to="/signup">Sign Up</NavLink>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={formSchema}
+            onSubmit={(values, actions) => {
+              const { email, password } = values;
+              props.auth(email, password, true);
+              actions.resetForm(initialValues);
+            }}
+          >
+            {({
+              values,
+              isSubmitting,
+              handleChange,
+              errors,
+              touched,
+              handleBlur,
+              handleSubmit,
+            }) => (
+              <Form className="Form" onSubmit={handleSubmit}>
+                {renderInput(
+                  "email",
+                  "email",
+                  "Email",
+                  values,
+                  handleChange,
+                  handleBlur,
+                  errors,
+                  touched
+                )}
+                {renderInput(
+                  "password",
+                  "password",
+                  "Password",
+                  values,
+                  handleChange,
+                  handleBlur,
+                  errors,
+                  touched
+                )}
+                <Button
+                  loading={props.isProcessing}
+                  className="SubmitBtn Btn"
+                  type="primary"
+                  htmlType="submit"
+                >
+                  Sign up
+                </Button>
+              </Form>
+            )}
+          </Formik>
+          <NavLink to="/login">Log in</NavLink>
         </div>
       </>
     );
   };
 
-  return rendered(props.isAuth);
+  return renderForm(props.isAuth);
 };
 
 const mapStateToProps = (state) => {
   return {
     isAuth: !!state.auth.token,
     isProcessing: state.auth.isProcessing,
-    errors: state.auth.errors,
+    serverErrors: state.auth.errors,
   };
 };
 
