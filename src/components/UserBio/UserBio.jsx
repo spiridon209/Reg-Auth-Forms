@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { Button, Row, Col } from "antd";
+import { Button } from "antd";
 import { logOut } from "../../redux/actions/auth";
 
 const UserBio = (props) => {
@@ -17,18 +17,18 @@ const UserBio = (props) => {
 
   const renderUserBio = () => {
     return (
-      <Row>
-        <Col span={12} offset={6}>
-          <div className="UserBio">{username}</div>
-          <Button type="primary" onClick={logOutHandler}>
-            Log out
-          </Button>
-        </Col>
-      </Row>
+      <>
+        <h1>Home Page</h1>
+
+        <div className="UserBio">{username}</div>
+        <Button className="Btn" type="primary" onClick={logOutHandler}>
+          Log out
+        </Button>
+      </>
     );
   };
 
-  return isAuth ? renderUserBio() : <Redirect to="/login" />; // make Log out Button
+  return isAuth ? renderUserBio() : <Redirect to="/login" />;
 };
 
 const mapStateToProps = (state) => {

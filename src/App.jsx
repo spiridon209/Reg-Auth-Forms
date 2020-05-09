@@ -8,7 +8,6 @@ import { Route, Switch, Redirect } from "react-router-dom";
 function App() {
   return (
     <div className="App">
-      <h1>Hello App</h1>
       <Switch>
         <Route path="/signup" component={RegForm} />
         <Route path="/login" component={AuthForm} />

@@ -13,6 +13,29 @@ const defaultState = {
 const RegForm = (props) => {
   const [fieldsData, setFieldsData] = useState(defaultState);
 
+  const renderErrors = (err) => {
+    // переделать возможно в отдельный компонент
+    if (err === null) {
+      return err;
+    }
+
+    let errorsList = [];
+
+    for (let key in err) {
+      errorsList.push(<li key={key}>{`${key}:${err[key]}`}</li>);
+    }
+
+    // if (err[name] === undefined) {
+    //   return null;
+    // }
+
+    return (
+      <div className="Errors">
+        <ul>{errorsList}</ul>
+      </div>
+    );
+  };
+
   const changeHandler = (fieldname) => (evt) => {
     const { value } = evt.target;
     setFieldsData({ ...fieldsData, [fieldname]: value });
@@ -30,40 +53,52 @@ const RegForm = (props) => {
       return <Redirect to="/"></Redirect>;
     }
     return (
-      <div className="FormWrapper">
-        <form className="Form" onSubmit={submitHandler}>
-          <fieldset className="Form-Group">
-            <Input
-              className="Form-Field"
-              type="text"
-              placeholder="Username"
-              value={fieldsData.name}
-              onChange={changeHandler("username")}
-            />
+      <>
+        <h1>Signup Page</h1>
+        <div className="FormWrapper">
+          <form className="Form" onSubmit={submitHandler}>
+            <fieldset className="Form-Group">
+              <Input
+                className="Form-Field"
+                type="text"
+                placeholder="Username"
+                value={fieldsData.name}
+                onChange={changeHandler("username")}
+                required
+              />
 
-            <Input
-              className="Form-Field"
-              type="email"
-              placeholder="Email"
-              value={fieldsData.email}
-              onChange={changeHandler("email")}
-            />
+              <Input
+                className="Form-Field"
+                type="email"
+                placeholder="Email"
+                value={fieldsData.email}
+                onChange={changeHandler("email")}
+                required
+              />
 
-            <Input
-              className="Form-Field"
-              type="password"
-              placeholder="Password"
-              value={fieldsData.password}
-              onChange={changeHandler("password")}
-            />
+              <Input
+                className="Form-Field"
+                type="password"
+                placeholder="Password"
+                value={fieldsData.password}
+                onChange={changeHandler("password")}
+                required
+              />
 
-            <Button className="SubmitBtn" type="primary" htmlType="submit">
-              Sign up
-            </Button>
-          </fieldset>
-        </form>
-        <NavLink to="/login">Log in</NavLink>
-      </div>
+              <Button
+                loading={props.isProcessing}
+                className="SubmitBtn Btn"
+                type="primary"
+                htmlType="submit"
+              >
+                Sign up
+              </Button>
+              {renderErrors(props.errors)}
+            </fieldset>
+          </form>
+          <NavLink to="/login">Log in</NavLink>
+        </div>
+      </>
     );
   };
 
@@ -71,7 +106,11 @@ const RegForm = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { isAuth: !!state.auth.token };
+  return {
+    isAuth: !!state.auth.token,
+    isProcessing: state.auth.isProcessing,
+    errors: state.auth.errors,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({

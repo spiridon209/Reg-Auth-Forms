@@ -9,6 +9,28 @@ const defaultState = { email: "", password: "" };
 const AuthForm = (props) => {
   const [fieldsData, setFieldsData] = useState(defaultState);
 
+  const renderErrors = (err) => {
+    if (err === null) {
+      return err;
+    }
+
+    let errorsList = [];
+
+    for (let key in err) {
+      errorsList.push(<li key={key}>{`${key}:${err[key]}`}</li>);
+    }
+
+    // if (err[name] === undefined) {
+    //   return null;
+    // }
+
+    return (
+      <div className="Errors">
+        <ul>{errorsList}</ul>
+      </div>
+    );
+  };
+
   const changeHandler = (fieldname) => (evt) => {
     const { value } = evt.target;
     setFieldsData({ ...fieldsData, [fieldname]: value });
@@ -26,32 +48,43 @@ const AuthForm = (props) => {
       return <Redirect to="/"></Redirect>;
     }
     return (
-      <div className="FormWrapper">
-        <form className="Form" onSubmit={submitHandler}>
-          <fieldset className="Form-Group">
-            <Input
-              className="Form-Field"
-              type="email"
-              placeholder="Email"
-              value={fieldsData.email}
-              onChange={changeHandler("email")}
-            />
+      <>
+        <h1>Login Page</h1>
+        <div className="FormWrapper">
+          <form className="Form" onSubmit={submitHandler}>
+            <fieldset className="Form-Group">
+              <Input
+                className="Form-Field"
+                type="email"
+                placeholder="Email"
+                value={fieldsData.email}
+                onChange={changeHandler("email")}
+                required
+              />
 
-            <Input
-              className="Form-Field"
-              type="password"
-              placeholder="Password"
-              value={fieldsData.password}
-              onChange={changeHandler("password")}
-            />
+              <Input
+                className="Form-Field"
+                type="password"
+                placeholder="Password"
+                value={fieldsData.password}
+                onChange={changeHandler("password")}
+                required
+              />
 
-            <Button className="SubmitBtn" type="primary" htmlType="submit">
-              Log in
-            </Button>
-          </fieldset>
-        </form>
-        <NavLink to="/signup">Sign Up</NavLink>
-      </div>
+              <Button
+                loading={props.isProcessing}
+                className="SubmitBtn Btn"
+                type="primary"
+                htmlType="submit"
+              >
+                Log in
+              </Button>
+              {renderErrors(props.errors)}
+            </fieldset>
+          </form>
+          <NavLink to="/signup">Sign Up</NavLink>
+        </div>
+      </>
     );
   };
 
@@ -59,7 +92,11 @@ const AuthForm = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { isAuth: !!state.auth.token };
+  return {
+    isAuth: !!state.auth.token,
+    isProcessing: state.auth.isProcessing,
+    errors: state.auth.errors,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
