@@ -1,14 +1,9 @@
-import {
-  AUTH_REQUEST,
-  AUTH_FAILURE,
-  AUTH_SUCCESS,
-  LOG_OUT,
-} from "../actions/actionTypes";
+import { AUTH_REQUEST, AUTH_FAILURE, AUTH_SUCCESS, LOG_OUT } from '../actions/actionTypes';
 
 const initialState = {
   token: null,
-  username: "",
-  email: "",
+  username: '',
+  email: '',
   isLogIn: true,
   id: null,
   errors: null,

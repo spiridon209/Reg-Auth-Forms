@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import { Button } from "antd";
-import { logOut } from "../../redux/actions/auth";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { Button } from 'antd';
+import { logOut } from '../../redux/actions/auth';
 
 const UserBio = (props) => {
   const { username, isAuth } = props;
@@ -11,8 +11,8 @@ const UserBio = (props) => {
     const { logOut } = props;
 
     logOut();
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
   };
 
   const renderUserBio = () => {

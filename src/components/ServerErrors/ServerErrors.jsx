@@ -1,6 +1,6 @@
-import React from "react";
-import { connect } from "react-redux";
-import { WarningTwoTone } from "@ant-design/icons";
+import React from 'react';
+import { connect } from 'react-redux';
+import { WarningTwoTone } from '@ant-design/icons';
 
 const ServerErrors = (props) => {
   const { serverErrors } = props;

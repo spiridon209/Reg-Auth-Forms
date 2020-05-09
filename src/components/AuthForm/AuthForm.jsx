@@ -1,25 +1,16 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Input, Button } from "antd";
-import { NavLink, Redirect } from "react-router-dom";
-import { auth, logOut } from "../../redux/actions/auth";
-import { Formik, Form } from "formik";
-import formSchema from "./formSchema";
-import ServerErrors from "../ServerErrors/ServerErrors";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Input, Button } from 'antd';
+import { NavLink, Redirect } from 'react-router-dom';
+import { Formik, Form } from 'formik';
+import { auth, logOut } from '../../redux/actions/auth';
+import formSchema from './formSchema';
+import ServerErrors from '../ServerErrors/ServerErrors';
 
-const initialValues = { email: "", password: "" };
+const initialValues = { email: '', password: '' };
 
 const AuthForm = (props) => {
-  const renderInput = (
-    name,
-    type,
-    label,
-    values,
-    handleChange,
-    handleBlur,
-    errors,
-    touched
-  ) => (
+  const renderInput = (name, type, label, values, handleChange, handleBlur, errors, touched) => (
     <label className="Form-Label" htmlFor={name}>
       {`${label}`}
       <Input
@@ -31,17 +22,15 @@ const AuthForm = (props) => {
         onChange={handleChange}
         onBlur={handleBlur}
         value={values[name]}
-        style={touched[name] && errors[name] ? { borderColor: "red" } : {}} //
+        style={touched[name] && errors[name] ? { borderColor: 'red' } : {}} //
       />
-      {touched[name] && errors[name] && (
-        <div className="Form-RequredField">{errors[name]}</div>
-      )}
+      {touched[name] && errors[name] && <div className="Form-RequredField">{errors[name]}</div>}
     </label>
   );
 
   const renderForm = (isAuth) => {
     if (isAuth) {
-      return <Redirect to="/"></Redirect>;
+      return <Redirect to="/" />;
     }
     return (
       <>
@@ -67,9 +56,9 @@ const AuthForm = (props) => {
             }) => (
               <Form className="Form" onSubmit={handleSubmit}>
                 {renderInput(
-                  "email",
-                  "email",
-                  "Email",
+                  'email',
+                  'email',
+                  'Email',
                   values,
                   handleChange,
                   handleBlur,
@@ -77,9 +66,9 @@ const AuthForm = (props) => {
                   touched
                 )}
                 {renderInput(
-                  "password",
-                  "password",
-                  "Password",
+                  'password',
+                  'password',
+                  'Password',
                   values,
                   handleChange,
                   handleBlur,

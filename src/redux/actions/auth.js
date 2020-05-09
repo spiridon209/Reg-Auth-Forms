@@ -1,19 +1,14 @@
-import axios from "axios";
-import {
-  AUTH_REQUEST,
-  AUTH_FAILURE,
-  AUTH_SUCCESS,
-  LOG_OUT,
-} from "./actionTypes";
+import axios from 'axios';
+import { AUTH_REQUEST, AUTH_FAILURE, AUTH_SUCCESS, LOG_OUT } from './actionTypes';
 
 export const auth = (email, password, isLogIn, username) => {
   return async (dispatch) => {
     let authData = { username, email, password };
-    let apiUrl = "https://conduit.productionready.io/api/users";
+    let apiUrl = 'https://conduit.productionready.io/api/users';
 
     if (isLogIn) {
       authData = { email, password };
-      apiUrl = "https://conduit.productionready.io/api/users/login";
+      apiUrl = 'https://conduit.productionready.io/api/users/login';
     }
     dispatch(authRequest(true));
     try {
@@ -22,8 +17,8 @@ export const auth = (email, password, isLogIn, username) => {
       });
       console.log(response);
       const { username, email, token, id } = response.data.user;
-      localStorage.setItem("token", token);
-      localStorage.setItem("userId", id);
+      localStorage.setItem('token', token);
+      localStorage.setItem('userId', id);
       dispatch(authSuccess(username, email, token, id));
     } catch (err) {
       console.log(err);
@@ -39,14 +34,7 @@ export const authRequest = (isProcessing) => {
   };
 };
 
-export const authSuccess = (
-  username,
-  email,
-  token,
-  id,
-  isLogIn = true,
-  isProcessing = false
-) => {
+export const authSuccess = (username, email, token, id, isLogIn = true, isProcessing = false) => {
   return {
     type: AUTH_SUCCESS,
     payload: { username, email, token, id, isLogIn, isProcessing },
