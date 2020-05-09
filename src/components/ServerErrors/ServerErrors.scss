@@ -1,0 +1,16 @@
+.ServerErrors {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-left: 10px;
+
+  &-Item {
+    color: red;
+    font-size: 14px;
+  }
+
+  &-ItemText {
+    margin-left: 5px;
+  }
+}

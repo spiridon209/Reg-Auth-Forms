@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Input, Button } from "antd";
-import { auth } from "../../redux/actions/auth";
+import { auth, logOut } from "../../redux/actions/auth";
 import { NavLink, Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
 import formSchema from "./formSchema";
+import ServerErrors from "../ServerErrors/ServerErrors";
 
 const initialValues = {
   username: "",
@@ -107,10 +108,13 @@ const RegForm = (props) => {
                 >
                   Sign up
                 </Button>
+                <ServerErrors />
               </Form>
             )}
           </Formik>
-          <NavLink to="/login">Log in</NavLink>
+          <NavLink to="/login" onClick={props.logOut}>
+            Log in
+          </NavLink>
         </div>
       </>
     );
@@ -123,13 +127,13 @@ const mapStateToProps = (state) => {
   return {
     isAuth: !!state.auth.token,
     isProcessing: state.auth.isProcessing,
-    serverErrors: state.auth.errors,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   auth: (email, password, isLogIn, username) =>
     dispatch(auth(email, password, isLogIn, username)),
+  logOut: () => dispatch(logOut()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegForm);

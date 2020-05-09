@@ -9,7 +9,7 @@ const UserBio = (props) => {
 
   const logOutHandler = () => {
     const { logOut } = props;
-    console.log(logOut);
+
     logOut();
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
@@ -19,11 +19,12 @@ const UserBio = (props) => {
     return (
       <>
         <h1>Home Page</h1>
-
-        <div className="UserBio">{username}</div>
-        <Button className="Btn" type="primary" onClick={logOutHandler}>
-          Log out
-        </Button>
+        <div className="UserBioWrap">
+          <div className="UserBio">{username}</div>
+          <Button className="Btn" type="primary" onClick={logOutHandler}>
+            Log out
+          </Button>
+        </div>
       </>
     );
   };

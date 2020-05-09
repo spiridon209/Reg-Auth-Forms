@@ -7,6 +7,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #597ef7;
 }
 
 code {
@@ -16,3 +17,6 @@ code {
 
 @import "./App.scss";
 @import "./components/UserBio/UserBio.scss";
+@import "./components/AuthForm/AuthForm.scss";
+@import "./components/RegForm/RexForm.scss";
+@import "./components/ServerErrors/ServerErrors.scss";
