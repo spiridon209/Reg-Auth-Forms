@@ -2,15 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Button } from 'antd';
+import PropTypes from 'prop-types';
 import { logOut } from '../../redux/actions/auth';
 
 const UserBio = (props) => {
-  const { username, isAuth } = props;
+  const { username, isAuth, logOutFunc } = props;
 
   const logOutHandler = () => {
-    const { logOut } = props;
-
-    logOut();
+    logOutFunc();
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
   };
@@ -40,6 +39,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return { logOut: () => dispatch(logOut()) };
+  return { logOutFunc: () => dispatch(logOut()) };
+};
+
+UserBio.propTypes = {
+  username: PropTypes.string.isRequired,
+  isAuth: PropTypes.bool.isRequired,
+  logOutFunc: PropTypes.func.isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(UserBio);

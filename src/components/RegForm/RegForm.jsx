@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Input, Button } from 'antd';
 import { NavLink, Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
+import PropTypes from 'prop-types';
 import { auth, logOut } from '../../redux/actions/auth';
 import formSchema from './formSchema';
 import ServerErrors from '../ServerErrors/ServerErrors';
@@ -14,6 +15,8 @@ const initialValues = {
 };
 
 const RegForm = (props) => {
+  const { isAuth, authFunc, logOutFunc, isProcessing } = props;
+
   const renderInput = (name, type, label, values, handleChange, handleBlur, errors, touched) => (
     <label className="Form-Label" htmlFor={name}>
       {`${label}`}
@@ -32,8 +35,8 @@ const RegForm = (props) => {
     </label>
   );
 
-  const renderForm = (isAuth) => {
-    if (isAuth) {
+  const renderForm = (userState) => {
+    if (userState) {
       return <Redirect to="/" />;
     }
     return (
@@ -45,13 +48,13 @@ const RegForm = (props) => {
             validationSchema={formSchema}
             onSubmit={(values, actions) => {
               const { email, password, username } = values;
-              props.auth(email, password, false, username);
+              authFunc(email, password, false, username);
               actions.resetForm(initialValues);
             }}
           >
             {({
               values,
-              isSubmitting,
+
               handleChange,
               errors,
               touched,
@@ -90,7 +93,7 @@ const RegForm = (props) => {
                   touched
                 )}
                 <Button
-                  loading={props.isProcessing}
+                  loading={isProcessing}
                   className="SubmitBtn Btn"
                   type="primary"
                   htmlType="submit"
@@ -101,7 +104,7 @@ const RegForm = (props) => {
               </Form>
             )}
           </Formik>
-          <NavLink to="/login" onClick={props.logOut}>
+          <NavLink to="/login" onClick={logOutFunc}>
             Log in
           </NavLink>
         </div>
@@ -109,7 +112,7 @@ const RegForm = (props) => {
     );
   };
 
-  return renderForm(props.isAuth);
+  return renderForm(isAuth);
 };
 
 const mapStateToProps = (state) => {
@@ -120,8 +123,15 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  auth: (email, password, isLogIn, username) => dispatch(auth(email, password, isLogIn, username)),
-  logOut: () => dispatch(logOut()),
+  authFunc: (email, password, isLogIn, username) =>
+    dispatch(auth(email, password, isLogIn, username)),
+  logOutFunc: () => dispatch(logOut()),
 });
+
+RegForm.propTypes = {
+  authFunc: PropTypes.func,
+  isProcessing: PropTypes.bool,
+  logOutFunc: PropTypes.func,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegForm);

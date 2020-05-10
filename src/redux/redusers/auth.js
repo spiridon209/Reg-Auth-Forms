@@ -6,7 +6,7 @@ const initialState = {
   email: '',
   isLogIn: true,
   id: null,
-  errors: null,
+  errors: '',
   isProcessing: false,
 };
 

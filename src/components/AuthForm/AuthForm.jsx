@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Input, Button } from 'antd';
 import { NavLink, Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
+import PropTypes from 'prop-types';
 import { auth, logOut } from '../../redux/actions/auth';
 import formSchema from './formSchema';
 import ServerErrors from '../ServerErrors/ServerErrors';
@@ -10,6 +11,8 @@ import ServerErrors from '../ServerErrors/ServerErrors';
 const initialValues = { email: '', password: '' };
 
 const AuthForm = (props) => {
+  const { isAuth, authFunc, logOutFunc, isProcessing } = props;
+
   const renderInput = (name, type, label, values, handleChange, handleBlur, errors, touched) => (
     <label className="Form-Label" htmlFor={name}>
       {`${label}`}
@@ -28,10 +31,11 @@ const AuthForm = (props) => {
     </label>
   );
 
-  const renderForm = (isAuth) => {
-    if (isAuth) {
+  const renderForm = (userState) => {
+    if (userState) {
       return <Redirect to="/" />;
     }
+
     return (
       <>
         <h1>Login Page</h1>
@@ -41,13 +45,13 @@ const AuthForm = (props) => {
             validationSchema={formSchema}
             onSubmit={(values, actions) => {
               const { email, password } = values;
-              props.auth(email, password, true);
+              authFunc(email, password, true);
               actions.resetForm(initialValues);
             }}
           >
             {({
               values,
-              isSubmitting,
+
               handleChange,
               errors,
               touched,
@@ -76,7 +80,7 @@ const AuthForm = (props) => {
                   touched
                 )}
                 <Button
-                  loading={props.isProcessing}
+                  loading={isProcessing}
                   className="SubmitBtn Btn"
                   type="primary"
                   htmlType="submit"
@@ -87,7 +91,7 @@ const AuthForm = (props) => {
               </Form>
             )}
           </Formik>
-          <NavLink to="/signup" onClick={props.logOut}>
+          <NavLink to="/signup" onClick={logOutFunc}>
             Signup
           </NavLink>
         </div>
@@ -95,7 +99,7 @@ const AuthForm = (props) => {
     );
   };
 
-  return renderForm(props.isAuth);
+  return renderForm(isAuth);
 };
 
 const mapStateToProps = (state) => {
@@ -106,8 +110,14 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  auth: (email, password, isLogIn) => dispatch(auth(email, password, isLogIn)),
-  logOut: () => dispatch(logOut()),
+  authFunc: (email, password, isLogIn) => dispatch(auth(email, password, isLogIn)),
+  logOutFunc: () => dispatch(logOut()),
 });
+
+AuthForm.propTypes = {
+  authFunc: PropTypes.func,
+  isProcessing: PropTypes.bool,
+  logOutFunc: PropTypes.func,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthForm);
