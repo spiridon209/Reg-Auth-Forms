@@ -1,18 +1,18 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import RegForm from './components/RegForm/RegForm';
-import AuthForm from './components/AuthForm/AuthForm';
-import UserBio from './components/UserBio/UserBio';
+import React from "react";
+import { connect } from "react-redux";
+import { Route, Switch, Redirect } from "react-router-dom";
+import RegForm from "./components/RegForm/RegForm";
+import AuthForm from "./components/AuthForm/AuthForm";
+import UserBio from "./components/UserBio/UserBio";
 
 function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path={`${process.env.PUBLIC_URL}/signup`} component={RegForm} />
-        <Route path={`${process.env.PUBLIC_URL}/login`} component={AuthForm} />
-        <Route path={`${process.env.PUBLIC_URL}/`} component={UserBio} />
-        <Redirect to={`${process.env.PUBLIC_URL}/`} />
+        <Route path="/signup" component={RegForm} />
+        <Route path="/login" component={AuthForm} />
+        <Route path="/" component={UserBio} />
+        <Redirect to="/" />
       </Switch>
     </div>
   );

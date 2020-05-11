@@ -1,19 +1,28 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Input, Button } from 'antd';
-import { NavLink, Redirect } from 'react-router-dom';
-import { Formik, Form } from 'formik';
-import PropTypes from 'prop-types';
-import { auth, logOut } from '../../redux/actions/auth';
-import formSchema from './formSchema';
-import ServerErrors from '../ServerErrors/ServerErrors';
+import React from "react";
+import { connect } from "react-redux";
+import { Input, Button } from "antd";
+import { NavLink, Redirect } from "react-router-dom";
+import { Formik, Form } from "formik";
+import PropTypes from "prop-types";
+import { auth, logOut } from "../../redux/actions/auth";
+import formSchema from "./formSchema";
+import ServerErrors from "../ServerErrors/ServerErrors";
 
-const initialValues = { email: '', password: '' };
+const initialValues = { email: "", password: "" };
 
 const AuthForm = (props) => {
   const { isAuth, authFunc, logOutFunc, isProcessing } = props;
 
-  const renderInput = (name, type, label, values, handleChange, handleBlur, errors, touched) => (
+  const renderInput = (
+    name,
+    type,
+    label,
+    values,
+    handleChange,
+    handleBlur,
+    errors,
+    touched
+  ) => (
     <label className="Form-Label" htmlFor={name}>
       {`${label}`}
       <Input
@@ -25,15 +34,17 @@ const AuthForm = (props) => {
         onChange={handleChange}
         onBlur={handleBlur}
         value={values[name]}
-        style={touched[name] && errors[name] ? { borderColor: 'red' } : {}} //
+        style={touched[name] && errors[name] ? { borderColor: "red" } : {}} //
       />
-      {touched[name] && errors[name] && <div className="Form-RequredField">{errors[name]}</div>}
+      {touched[name] && errors[name] && (
+        <div className="Form-RequredField">{errors[name]}</div>
+      )}
     </label>
   );
 
   const renderForm = (userState) => {
     if (userState) {
-      return <Redirect to={`${process.env.PUBLIC_URL}/`} />;
+      return <Redirect to="/" />;
     }
 
     return (
@@ -60,9 +71,9 @@ const AuthForm = (props) => {
             }) => (
               <Form className="Form" onSubmit={handleSubmit}>
                 {renderInput(
-                  'email',
-                  'email',
-                  'Email',
+                  "email",
+                  "email",
+                  "Email",
                   values,
                   handleChange,
                   handleBlur,
@@ -70,9 +81,9 @@ const AuthForm = (props) => {
                   touched
                 )}
                 {renderInput(
-                  'password',
-                  'password',
-                  'Password',
+                  "password",
+                  "password",
+                  "Password",
                   values,
                   handleChange,
                   handleBlur,
@@ -91,7 +102,7 @@ const AuthForm = (props) => {
               </Form>
             )}
           </Formik>
-          <NavLink to={`${process.env.PUBLIC_URL}/signup`} onClick={logOutFunc}>
+          <NavLink to="/signup" onClick={logOutFunc}>
             Signup
           </NavLink>
         </div>
@@ -110,7 +121,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  authFunc: (email, password, isLogIn) => dispatch(auth(email, password, isLogIn)),
+  authFunc: (email, password, isLogIn) =>
+    dispatch(auth(email, password, isLogIn)),
   logOutFunc: () => dispatch(logOut()),
 });
 
