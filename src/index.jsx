@@ -23,7 +23,7 @@ const store = createStore(
 );
 
 const app = (
-  <BrowserRouter basename={process.env.PUBLIC_URL}>
+  <BrowserRouter>
     <Provider store={store}>
       <App />
     </Provider>
