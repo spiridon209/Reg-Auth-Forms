@@ -9,10 +9,10 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path="/signup" component={RegForm} />
-        <Route path="/login" component={AuthForm} />
-        <Route path="/" component={UserBio} />
-        <Redirect to="/" />
+        <Route path="Reg-Auth-Forms/signup" component={RegForm} />
+        <Route path="Reg-Auth-Forms/login" component={AuthForm} />
+        <Route path="Reg-Auth-Forms/" component={UserBio} />
+        <Redirect to="Reg-Auth-Forms/" />
       </Switch>
     </div>
   );

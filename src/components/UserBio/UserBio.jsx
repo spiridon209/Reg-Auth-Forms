@@ -28,7 +28,7 @@ const UserBio = (props) => {
     );
   };
 
-  return isAuth ? renderUserBio() : <Redirect to="/login" />;
+  return isAuth ? renderUserBio() : <Redirect to="Reg-Auth-Forms/login" />;
 };
 
 const mapStateToProps = (state) => {
