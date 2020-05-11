@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6deaf53d548d47ce0089adaaef3f8492",
+    "revision": "526c48c58bbe01747c4e69998488b972",
     "url": "/Reg-Auth-Forms/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Reg-Auth-Forms/static/css/2.94b6d6f9.chunk.css"
   },
   {
-    "revision": "3ea969f83f9ec0d21a38",
+    "revision": "fb2eea2804d73ff77a33",
     "url": "/Reg-Auth-Forms/static/css/main.1d4aac46.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Reg-Auth-Forms/static/js/2.554b6705.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "3ea969f83f9ec0d21a38",
-    "url": "/Reg-Auth-Forms/static/js/main.1286f6f5.chunk.js"
+    "revision": "fb2eea2804d73ff77a33",
+    "url": "/Reg-Auth-Forms/static/js/main.506462ee.chunk.js"
   },
   {
     "revision": "d0c2143c42d9fc76e993",

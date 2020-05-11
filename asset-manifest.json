@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Reg-Auth-Forms/static/css/main.1d4aac46.chunk.css",
-    "main.js": "/Reg-Auth-Forms/static/js/main.1286f6f5.chunk.js",
-    "main.js.map": "/Reg-Auth-Forms/static/js/main.1286f6f5.chunk.js.map",
+    "main.js": "/Reg-Auth-Forms/static/js/main.506462ee.chunk.js",
+    "main.js.map": "/Reg-Auth-Forms/static/js/main.506462ee.chunk.js.map",
     "runtime-main.js": "/Reg-Auth-Forms/static/js/runtime-main.62cfb85c.js",
     "runtime-main.js.map": "/Reg-Auth-Forms/static/js/runtime-main.62cfb85c.js.map",
     "static/css/2.94b6d6f9.chunk.css": "/Reg-Auth-Forms/static/css/2.94b6d6f9.chunk.css",
     "static/js/2.554b6705.chunk.js": "/Reg-Auth-Forms/static/js/2.554b6705.chunk.js",
     "static/js/2.554b6705.chunk.js.map": "/Reg-Auth-Forms/static/js/2.554b6705.chunk.js.map",
     "index.html": "/Reg-Auth-Forms/index.html",
-    "precache-manifest.df7b1966a20defa0fa237bf2fbbd660c.js": "/Reg-Auth-Forms/precache-manifest.df7b1966a20defa0fa237bf2fbbd660c.js",
+    "precache-manifest.2b9a69f16f39fb91e66aa7b695ce90e1.js": "/Reg-Auth-Forms/precache-manifest.2b9a69f16f39fb91e66aa7b695ce90e1.js",
     "service-worker.js": "/Reg-Auth-Forms/service-worker.js",
     "static/css/2.94b6d6f9.chunk.css.map": "/Reg-Auth-Forms/static/css/2.94b6d6f9.chunk.css.map",
     "static/css/main.1d4aac46.chunk.css.map": "/Reg-Auth-Forms/static/css/main.1d4aac46.chunk.css.map",
@@ -20,6 +20,6 @@
     "static/css/2.94b6d6f9.chunk.css",
     "static/js/2.554b6705.chunk.js",
     "static/css/main.1d4aac46.chunk.css",
-    "static/js/main.1286f6f5.chunk.js"
+    "static/js/main.506462ee.chunk.js"
   ]
 }
