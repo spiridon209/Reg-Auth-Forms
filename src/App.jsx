@@ -1,9 +1,9 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Route, Switch, Redirect } from "react-router-dom";
-import RegForm from "./components/RegForm/RegForm";
-import AuthForm from "./components/AuthForm/AuthForm";
-import UserBio from "./components/UserBio/UserBio";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import RegForm from './components/RegForm/RegForm';
+import AuthForm from './components/AuthForm/AuthForm';
+import UserBio from './components/UserBio/UserBio';
 
 function App() {
   return (
