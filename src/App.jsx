@@ -9,10 +9,10 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path="Reg-Auth-Forms/signup" component={RegForm} />
-        <Route path="Reg-Auth-Forms/login" component={AuthForm} />
-        <Route path="Reg-Auth-Forms/" component={UserBio} />
-        <Redirect to="Reg-Auth-Forms/" />
+        <Route path={`${process.env.PUBLIC_URL}/signup`} component={RegForm} />
+        <Route path={`${process.env.PUBLIC_URL}/login`} component={AuthForm} />
+        <Route path={`${process.env.PUBLIC_URL}/`} component={UserBio} />
+        <Redirect to={`${process.env.PUBLIC_URL}/`} />
       </Switch>
     </div>
   );

@@ -28,7 +28,7 @@ const UserBio = (props) => {
     );
   };
 
-  return isAuth ? renderUserBio() : <Redirect to="Reg-Auth-Forms/login" />;
+  return isAuth ? renderUserBio() : <Redirect to={`${process.env.PUBLIC_URL}/login`} />;
 };
 
 const mapStateToProps = (state) => {

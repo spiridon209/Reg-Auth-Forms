@@ -33,7 +33,7 @@ const AuthForm = (props) => {
 
   const renderForm = (userState) => {
     if (userState) {
-      return <Redirect to="Reg-Auth-Forms/" />;
+      return <Redirect to={`${process.env.PUBLIC_URL}/`} />;
     }
 
     return (
@@ -91,7 +91,7 @@ const AuthForm = (props) => {
               </Form>
             )}
           </Formik>
-          <NavLink to="Reg-Auth-Forms/signup" onClick={logOutFunc}>
+          <NavLink to={`${process.env.PUBLIC_URL}/signup`} onClick={logOutFunc}>
             Signup
           </NavLink>
         </div>
