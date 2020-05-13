@@ -1,9 +1,9 @@
-import React from "react";
-import { connect } from "react-redux";
-import { WarningTwoTone } from "@ant-design/icons";
-import PropTypes from "prop-types";
-import _ from "lodash";
-import "./ServerErrors.scss";
+import React from 'react';
+import { connect } from 'react-redux';
+import { WarningTwoTone } from '@ant-design/icons';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import './ServerErrors.scss';
 
 const ServerErrors = (props) => {
   const { serverErrors } = props;
@@ -33,8 +33,7 @@ const mapStateToProps = (state) => {
 };
 
 ServerErrors.propTypes = {
-  serverErrors: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-    .isRequired,
+  serverErrors: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
 };
 
 export default connect(mapStateToProps)(ServerErrors);

@@ -4,14 +4,14 @@ import {
   AUTH_SUCCESS,
   LOG_OUT,
   RESET_ERRORS,
-} from "../actions/actionTypes";
+} from '../actions/actionTypes';
 
 const initialState = {
   token: null,
-  username: "",
-  email: "",
+  username: '',
+  email: '',
   id: null,
-  errors: "",
+  errors: '',
   isProcessing: false,
 };
 

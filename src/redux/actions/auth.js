@@ -1,11 +1,5 @@
-import { authFetch, regFetch } from "../../api/authRequest";
-import {
-  AUTH_REQUEST,
-  AUTH_FAILURE,
-  AUTH_SUCCESS,
-  LOG_OUT,
-  RESET_ERRORS,
-} from "./actionTypes";
+import { authFetch, regFetch } from '../../api/authRequest';
+import { AUTH_REQUEST, AUTH_FAILURE, AUTH_SUCCESS, LOG_OUT, RESET_ERRORS } from './actionTypes';
 
 export const authRequest = (isProcessing) => {
   return {
@@ -14,14 +8,7 @@ export const authRequest = (isProcessing) => {
   };
 };
 
-export const authSuccess = (
-  username,
-  email,
-  token,
-  id,
-  isLogIn = true,
-  isProcessing = false
-) => {
+export const authSuccess = (username, email, token, id, isLogIn = true, isProcessing = false) => {
   return {
     type: AUTH_SUCCESS,
     payload: { username, email, token, id, isLogIn, isProcessing },
@@ -38,8 +25,8 @@ export const auth = (mail, password) => {
     try {
       const response = await authFetch({ email: mail, password });
       const { username, email, token, id } = response.data.user;
-      localStorage.setItem("token", token);
-      localStorage.setItem("userId", id);
+      localStorage.setItem('token', token);
+      localStorage.setItem('userId', id);
       dispatch(authSuccess(username, email, token, id));
     } catch (err) {
       dispatch(authFailure(err.response.data.errors));
@@ -57,8 +44,8 @@ export const reg = (mail, password, name) => {
         password,
       });
       const { username, email, token, id } = response.data.user;
-      localStorage.setItem("token", token);
-      localStorage.setItem("userId", id);
+      localStorage.setItem('token', token);
+      localStorage.setItem('userId', id);
       dispatch(authSuccess(username, email, token, id));
     } catch (err) {
       dispatch(authFailure(err.response.data.errors));

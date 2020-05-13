@@ -1,32 +1,23 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Input, Button } from "antd";
-import { NavLink } from "react-router-dom";
-import { Formik, Form } from "formik";
-import PropTypes from "prop-types";
-import { reg, resetErrors } from "../../redux/actions/auth";
-import formSchema from "./formSchema";
-import ServerErrors from "../ServerErrors/ServerErrors";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Input, Button } from 'antd';
+import { NavLink } from 'react-router-dom';
+import { Formik, Form } from 'formik';
+import PropTypes from 'prop-types';
+import { reg, resetErrors } from '../../redux/actions/auth';
+import formSchema from './formSchema';
+import ServerErrors from '../ServerErrors/ServerErrors';
 
 const initialValues = {
-  username: "",
-  email: "",
-  password: "",
+  username: '',
+  email: '',
+  password: '',
 };
 
 const RegForm = (props) => {
   const { isAuth, regFunc, resetErrorsFunc, isProcessing } = props;
 
-  const renderInput = (
-    name,
-    type,
-    label,
-    values,
-    handleChange,
-    handleBlur,
-    errors,
-    touched
-  ) => (
+  const renderInput = (name, type, label, values, handleChange, handleBlur, errors, touched) => (
     <label className="Form-Label" htmlFor={name}>
       {`${label}`}
       <Input
@@ -38,11 +29,9 @@ const RegForm = (props) => {
         onChange={handleChange}
         onBlur={handleBlur}
         value={values[name]}
-        style={touched[name] && errors[name] ? { borderColor: "red" } : {}} //
+        style={touched[name] && errors[name] ? { borderColor: 'red' } : {}} //
       />
-      {touched[name] && errors[name] && (
-        <div className="Form-RequredField">{errors[name]}</div>
-      )}
+      {touched[name] && errors[name] && <div className="Form-RequredField">{errors[name]}</div>}
     </label>
   );
 
@@ -62,19 +51,12 @@ const RegForm = (props) => {
               }
             }}
           >
-            {({
-              values,
-              handleChange,
-              errors,
-              touched,
-              handleBlur,
-              handleSubmit,
-            }) => (
+            {({ values, handleChange, errors, touched, handleBlur, handleSubmit }) => (
               <Form className="Form" onSubmit={handleSubmit}>
                 {renderInput(
-                  "username",
-                  "text",
-                  "User Name",
+                  'username',
+                  'text',
+                  'User Name',
                   values,
                   handleChange,
                   handleBlur,
@@ -82,9 +64,9 @@ const RegForm = (props) => {
                   touched
                 )}
                 {renderInput(
-                  "email",
-                  "email",
-                  "Email",
+                  'email',
+                  'email',
+                  'Email',
                   values,
                   handleChange,
                   handleBlur,
@@ -92,9 +74,9 @@ const RegForm = (props) => {
                   touched
                 )}
                 {renderInput(
-                  "password",
-                  "password",
-                  "Password",
+                  'password',
+                  'password',
+                  'Password',
                   values,
                   handleChange,
                   handleBlur,
@@ -113,10 +95,7 @@ const RegForm = (props) => {
               </Form>
             )}
           </Formik>
-          <NavLink
-            to={`${process.env.PUBLIC_URL}/login`}
-            onClick={resetErrorsFunc}
-          >
+          <NavLink to={`${process.env.PUBLIC_URL}/login`} onClick={resetErrorsFunc}>
             Log in
           </NavLink>
         </div>
@@ -135,8 +114,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  regFunc: (email, password, username) =>
-    dispatch(reg(email, password, username)),
+  regFunc: (email, password, username) => dispatch(reg(email, password, username)),
   resetErrorsFunc: () => dispatch(resetErrors()),
 });
 
