@@ -1,5 +1,11 @@
-import axios from 'axios';
-import { AUTH_REQUEST, AUTH_FAILURE, AUTH_SUCCESS, LOG_OUT } from './actionTypes';
+import { authFetch, regFetch } from "../../api/authRequest";
+import {
+  AUTH_REQUEST,
+  AUTH_FAILURE,
+  AUTH_SUCCESS,
+  LOG_OUT,
+  RESET_ERRORS,
+} from "./actionTypes";
 
 export const authRequest = (isProcessing) => {
   return {
@@ -8,7 +14,14 @@ export const authRequest = (isProcessing) => {
   };
 };
 
-export const authSuccess = (username, email, token, id, isLogIn = true, isProcessing = false) => {
+export const authSuccess = (
+  username,
+  email,
+  token,
+  id,
+  isLogIn = true,
+  isProcessing = false
+) => {
   return {
     type: AUTH_SUCCESS,
     payload: { username, email, token, id, isLogIn, isProcessing },
@@ -19,23 +32,33 @@ export const authFailure = (errors, isProcessing = false) => {
   return { type: AUTH_FAILURE, payload: { errors, isProcessing } };
 };
 
-export const auth = (mail, password, isLogIn, name) => {
+export const auth = (mail, password) => {
   return async (dispatch) => {
-    let authData = { username: name, email: mail, password };
-    let apiUrl = 'https://conduit.productionready.io/api/users';
-
-    if (isLogIn) {
-      authData = { email: mail, password };
-      apiUrl = 'https://conduit.productionready.io/api/users/login';
-    }
     dispatch(authRequest(true));
     try {
-      const response = await axios.post(apiUrl, {
-        user: authData,
+      const response = await authFetch({ email: mail, password });
+      const { username, email, token, id } = response.data.user;
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", id);
+      dispatch(authSuccess(username, email, token, id));
+    } catch (err) {
+      dispatch(authFailure(err.response.data.errors));
+    }
+  };
+};
+
+export const reg = (mail, password, name) => {
+  return async (dispatch) => {
+    dispatch(authRequest(true));
+    try {
+      const response = await regFetch({
+        username: name,
+        email: mail,
+        password,
       });
       const { username, email, token, id } = response.data.user;
-      localStorage.setItem('token', token);
-      localStorage.setItem('userId', id);
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", id);
       dispatch(authSuccess(username, email, token, id));
     } catch (err) {
       dispatch(authFailure(err.response.data.errors));
@@ -46,5 +69,11 @@ export const auth = (mail, password, isLogIn, name) => {
 export const logOut = () => {
   return {
     type: LOG_OUT,
+  };
+};
+
+export const resetErrors = () => {
+  return {
+    type: RESET_ERRORS,
   };
 };

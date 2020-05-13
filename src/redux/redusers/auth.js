@@ -1,12 +1,17 @@
-import { AUTH_REQUEST, AUTH_FAILURE, AUTH_SUCCESS, LOG_OUT } from '../actions/actionTypes';
+import {
+  AUTH_REQUEST,
+  AUTH_FAILURE,
+  AUTH_SUCCESS,
+  LOG_OUT,
+  RESET_ERRORS,
+} from "../actions/actionTypes";
 
 const initialState = {
   token: null,
-  username: '',
-  email: '',
-  isLogIn: true,
+  username: "",
+  email: "",
   id: null,
-  errors: '',
+  errors: "",
   isProcessing: false,
 };
 
@@ -32,6 +37,7 @@ const authReduser = (state = initialState, action) => {
     }
 
     case LOG_OUT:
+    case RESET_ERRORS:
       return initialState;
 
     default:
