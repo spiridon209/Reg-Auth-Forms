@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import RegForm from './components/RegForm/RegForm';
 import AuthForm from './components/AuthForm/AuthForm';
 import UserBio from './components/UserBio/UserBio';
+import CreateArticle from './components/CreateArticle/CreateArticle';
 
 function App(props) {
   const { isAuth } = props;
@@ -14,7 +15,8 @@ function App(props) {
     return (
       <div className="App">
         <Switch>
-          <Route path={`${process.env.PUBLIC_URL}/`} component={UserBio} />
+          <Route exact path={`${process.env.PUBLIC_URL}/`} component={UserBio} />
+          <Route exact path={`${process.env.PUBLIC_URL}/add`} component={CreateArticle} />
           <Redirect to={`${process.env.PUBLIC_URL}/`} />
         </Switch>
       </div>
