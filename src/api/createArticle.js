@@ -13,7 +13,7 @@ const createArticleFetch = async (data) => {
     {
       article: data,
     },
-    headers
+    { headers }
   );
   return response;
 };

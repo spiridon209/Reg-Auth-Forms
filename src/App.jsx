@@ -1,5 +1,5 @@
 import './App.scss';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -7,9 +7,14 @@ import RegForm from './components/RegForm/RegForm';
 import AuthForm from './components/AuthForm/AuthForm';
 import UserBio from './components/UserBio/UserBio';
 import CreateArticle from './components/CreateArticle/CreateArticle';
+import { autoLogIn } from './redux/actions/auth';
 
 function App(props) {
-  const { isAuth } = props;
+  const { isAuth, autoLogInFunc } = props;
+
+  useEffect(() => {
+    autoLogInFunc();
+  });
 
   if (isAuth) {
     return (
@@ -40,8 +45,13 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  autoLogInFunc: () => dispatch(autoLogIn()),
+});
+
 App.propTypes = {
   isAuth: PropTypes.bool.isRequired,
+  autoLogInFunc: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
