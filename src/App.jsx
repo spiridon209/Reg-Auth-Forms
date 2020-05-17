@@ -8,6 +8,7 @@ import AuthForm from './components/AuthForm/AuthForm';
 import UserBio from './components/UserBio/UserBio';
 import CreateArticle from './components/CreateArticle/CreateArticle';
 import { autoLogIn } from './redux/actions/auth';
+import Layout from './hoc/Layout/Layout';
 
 function App(props) {
   const { isAuth, autoLogInFunc } = props;
@@ -16,8 +17,18 @@ function App(props) {
     autoLogInFunc();
   });
 
+  let routes = (
+    <div className="App">
+      <Switch>
+        <Route exact path={`${process.env.PUBLIC_URL}/signup`} component={RegForm} />
+        <Route exact path={`${process.env.PUBLIC_URL}/login`} component={AuthForm} />
+        <Redirect to={`${process.env.PUBLIC_URL}/login`} />
+      </Switch>
+    </div>
+  );
+
   if (isAuth) {
-    return (
+    routes = (
       <div className="App">
         <Switch>
           <Route exact path={`${process.env.PUBLIC_URL}/`} component={UserBio} />
@@ -28,15 +39,7 @@ function App(props) {
     );
   }
 
-  return (
-    <div className="App">
-      <Switch>
-        <Route exact path={`${process.env.PUBLIC_URL}/signup`} component={RegForm} />
-        <Route exact path={`${process.env.PUBLIC_URL}/login`} component={AuthForm} />
-        <Redirect to={`${process.env.PUBLIC_URL}/login`} />
-      </Switch>
-    </div>
-  );
+  return <Layout>{routes}</Layout>;
 }
 
 const mapStateToProps = (state) => {

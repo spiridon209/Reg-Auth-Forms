@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { Button } from 'antd';
 import PropTypes from 'prop-types';
 import { logOut } from '../../redux/actions/auth';
-import CreateArticle from '../CreateArticle/CreateArticle';
+
 import './UserBio.scss';
 
 const UserBio = (props) => {
@@ -25,7 +25,9 @@ const UserBio = (props) => {
           <Button className="Btn" type="primary" onClick={logOutHandler}>
             Log out
           </Button>
-          <CreateArticle />
+          <div className="UserBioWrap-LinkToCreateArticle">
+            <NavLink to={`${process.env.PUBLIC_URL}/add`}>Create article</NavLink>
+          </div>
         </div>
       </>
     );
