@@ -1,0 +1,11 @@
+.Article {
+  border: 1px solid rgba(13, 114, 230, 0.966);
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.LikeButton {
+  &__Liked {
+    background-color: rgba(13, 114, 230, 0.966);
+  }
+}
