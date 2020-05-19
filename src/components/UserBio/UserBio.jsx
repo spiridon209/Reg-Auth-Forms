@@ -4,6 +4,7 @@ import { Redirect, NavLink } from 'react-router-dom';
 import { Button } from 'antd';
 import PropTypes from 'prop-types';
 import { logOut } from '../../redux/actions/auth';
+import ArticleList from '../ArticleList/ArticleList';
 
 import './UserBio.scss';
 
@@ -28,6 +29,7 @@ const UserBio = (props) => {
           <div className="UserBioWrap-LinkToCreateArticle">
             <NavLink to={`${process.env.PUBLIC_URL}/add`}>Create article</NavLink>
           </div>
+          <ArticleList />
         </div>
       </>
     );
