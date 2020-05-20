@@ -6,6 +6,7 @@ import {
   GET_ARTICLES_FAILURE,
   ARTICLE_FAVORITED,
   ARTICLE_UNFAVORITED,
+  ARTICLES_PAGINATION,
 } from './actionTypes';
 
 export const getArticlesRequest = () => {
@@ -25,11 +26,11 @@ export const getArticlesFailure = (payload) => {
   return { type: GET_ARTICLES_FAILURE, payload };
 };
 
-export const getArticles = () => {
+export const getArticles = (offset) => {
   return async (dispatch) => {
     dispatch(getArticlesRequest());
     try {
-      const response = await getArticlesFetch();
+      const response = await getArticlesFetch(offset);
       dispatch(getArticlesSuccess(response.data));
     } catch (err) {
       dispatch(getArticlesFailure(err));
@@ -65,4 +66,8 @@ export const unfavoriteArticle = (slug) => {
       dispatch(getArticlesFailure(err));
     }
   };
+};
+
+export const articlesPagination = (payload) => {
+  return { type: ARTICLES_PAGINATION, payload };
 };

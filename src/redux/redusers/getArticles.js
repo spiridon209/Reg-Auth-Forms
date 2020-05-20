@@ -4,12 +4,15 @@ import {
   GET_ARTICLES_FAILURE,
   ARTICLE_FAVORITED,
   ARTICLE_UNFAVORITED,
+  ARTICLES_PAGINATION,
 } from '../actions/actionTypes';
 
 const initialState = {
   articles: [],
   isLoading: false,
   errors: '',
+  articlesCount: 0,
+  currentPage: 1,
 };
 
 const getArticlesReducer = (state = initialState, action) => {
@@ -19,9 +22,9 @@ const getArticlesReducer = (state = initialState, action) => {
     }
     case GET_ARTICLES_SUCCESS: {
       const {
-        payload: { articles },
+        payload: { articles, articlesCount },
       } = action;
-      return { ...state, isLoading: false, articles };
+      return { ...state, isLoading: false, articles, articlesCount };
     }
     case GET_ARTICLES_FAILURE: {
       const {
@@ -48,6 +51,15 @@ const getArticlesReducer = (state = initialState, action) => {
           }
           return art;
         }),
+      };
+    }
+    case ARTICLES_PAGINATION: {
+      const {
+        payload: { currentPage },
+      } = action;
+      return {
+        ...state,
+        currentPage,
       };
     }
     default:

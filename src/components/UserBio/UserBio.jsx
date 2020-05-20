@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Button } from 'antd';
 import PropTypes from 'prop-types';
 import { logOut } from '../../redux/actions/auth';
@@ -9,7 +9,7 @@ import ArticleList from '../ArticleList/ArticleList';
 import './UserBio.scss';
 
 const UserBio = (props) => {
-  const { username, isAuth, logOutFunc } = props;
+  const { username, logOutFunc } = props;
 
   const logOutHandler = () => {
     logOutFunc();
@@ -35,13 +35,12 @@ const UserBio = (props) => {
     );
   };
 
-  return isAuth ? renderUserBio() : <Redirect to={`${process.env.PUBLIC_URL}/login`} />;
+  return renderUserBio();
 };
 
 const mapStateToProps = (state) => {
   return {
     username: state.auth.username,
-    isAuth: !!state.auth.token,
   };
 };
 
@@ -51,7 +50,7 @@ const mapDispatchToProps = (dispatch) => {
 
 UserBio.propTypes = {
   username: PropTypes.string.isRequired,
-  isAuth: PropTypes.bool.isRequired,
+
   logOutFunc: PropTypes.func.isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(UserBio);
