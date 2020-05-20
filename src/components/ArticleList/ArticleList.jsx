@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Article from '../Article/Article';
+import ArticlePreview from '../ArticlePreview/ArticlePreview';
 import { getArticles } from '../../redux/actions/getArticles';
 import ArticlesPagination from '../ArticlesPagination/ArticlesPagination';
 
@@ -23,7 +23,7 @@ const ArticleList = (props) => {
   return (
     <div>
       {articles.map((article) => (
-        <Article key={article.slug} article={article} />
+        <ArticlePreview key={article.slug} article={article} />
       ))}
       <ArticlesPagination />
     </div>
