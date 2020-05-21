@@ -3,6 +3,7 @@ import './ArticlePreview.scss';
 import { LikeTwoTone } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { favoriteArticle, unfavoriteArticle } from '../../redux/actions/getArticles';
 
 const ArticlePreview = (props) => {
@@ -21,8 +22,16 @@ const ArticlePreview = (props) => {
     unfavoriteArticleFunc,
   } = props;
 
+  const history = useHistory();
+
+  const toArticlePage = (evt) => {
+    evt.preventDefault();
+    history.push(`${process.env.PUBLIC_URL}/articles/${slug}`);
+  };
+
   const handleLikeArticle = (evt) => {
     evt.preventDefault();
+    evt.stopPropagation();
     if (favorited) {
       unfavoriteArticleFunc(slug);
     } else {
@@ -37,7 +46,13 @@ const ArticlePreview = (props) => {
   }
   // const { username } = props.article.author;
   return (
-    <div className="ArticlePreview">
+    <div
+      className="ArticlePreview"
+      onClick={toArticlePage}
+      onKeyDown={toArticlePage}
+      role="button"
+      tabIndex="0"
+    >
       <div className="ArticlePreview-AuthorDateLikesRow">
         <div className="AuthorDate">
           <span className="Author">{username}</span>
