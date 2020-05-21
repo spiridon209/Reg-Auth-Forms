@@ -9,6 +9,7 @@ import UserBio from './components/UserBio/UserBio';
 import CreateArticle from './components/CreateArticle/CreateArticle';
 import { autoLogIn } from './redux/actions/auth';
 import Layout from './hoc/Layout/Layout';
+import Article from './components/Article/Article';
 
 function App(props) {
   const { isAuth, autoLogInFunc } = props;
@@ -32,6 +33,7 @@ function App(props) {
       <div className="App">
         <Switch>
           <Route exact path={`${process.env.PUBLIC_URL}/`} component={UserBio} />
+          <Route exact path={`${process.env.PUBLIC_URL}/articles/:slug`} component={Article} />
           <Route exact path={`${process.env.PUBLIC_URL}/add`} component={CreateArticle} />
           <Redirect to={`${process.env.PUBLIC_URL}/`} />
         </Switch>
