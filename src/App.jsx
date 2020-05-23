@@ -12,6 +12,7 @@ import Layout from './hoc/Layout/Layout';
 import Article from './components/Article/Article';
 import ArticleList from './components/ArticleList/ArticleList';
 import Navigation from './components/Navigation/Navigation';
+import ArticleEditor from './components/ArticleEditor/ArticleEditor';
 
 function App(props) {
   const { isAuth, autoLogInFunc } = props;
@@ -42,6 +43,11 @@ function App(props) {
         <Switch>
           <Route exact path={`${process.env.PUBLIC_URL}/`} component={ArticleList} />
           <Route exact path={`${process.env.PUBLIC_URL}/articles/:slug`} component={Article} />
+          <Route
+            exact
+            path={`${process.env.PUBLIC_URL}/articles/:slug/edit`}
+            component={ArticleEditor}
+          />
           <Route exact path={`${process.env.PUBLIC_URL}/add`} component={CreateArticle} />
           <Redirect to={`${process.env.PUBLIC_URL}/`} />
         </Switch>

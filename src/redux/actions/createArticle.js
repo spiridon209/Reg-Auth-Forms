@@ -26,8 +26,8 @@ export const createArticle = (data) => {
   return async (dispatch) => {
     dispatch(createArticleRequest());
     try {
-      const response = await createArticleFetch(data);
-      dispatch(createArticleSuccess(response));
+      await createArticleFetch(data);
+      dispatch(createArticleSuccess());
     } catch (err) {
       dispatch(createArticleFailure(err.response.data.errors));
     }

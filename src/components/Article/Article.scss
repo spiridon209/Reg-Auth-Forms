@@ -44,4 +44,11 @@
   .Likes {
     align-self: flex-end;
   }
+
+  .Buttons {
+    &-UpdateBtn {
+      background-color: gray;
+      border-radius: 3px;
+    }
+  }
 }

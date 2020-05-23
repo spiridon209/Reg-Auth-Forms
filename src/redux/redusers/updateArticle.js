@@ -1,28 +1,29 @@
 import {
-  CREATE_ARTICLE_REQUEST,
-  CREATE_ARTICLE_FAILURE,
-  CREATE_ARTICLE_SUCCESS,
+  UPDATE_ARTICLE_REQUEST,
+  UPDATE_ARTICLE_FAILURE,
+  UPDATE_ARTICLE_SUCCESS,
 } from '../actions/actionTypes';
 
 const initialState = {
   isProcessing: false,
+
   errors: '',
 };
 
-const createArticleReduser = (state = initialState, action) => {
+const updateArticleReduser = (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_ARTICLE_REQUEST: {
+    case UPDATE_ARTICLE_REQUEST: {
       return { ...state, isProcessing: true };
     }
 
-    case CREATE_ARTICLE_SUCCESS: {
+    case UPDATE_ARTICLE_SUCCESS: {
       return {
         ...state,
         isProcessing: false,
       };
     }
 
-    case CREATE_ARTICLE_FAILURE: {
+    case UPDATE_ARTICLE_FAILURE: {
       const { payload } = action;
       return { ...state, errors: payload, isProcessing: false };
     }
@@ -32,4 +33,4 @@ const createArticleReduser = (state = initialState, action) => {
   }
 };
 
-export default createArticleReduser;
+export default updateArticleReduser;

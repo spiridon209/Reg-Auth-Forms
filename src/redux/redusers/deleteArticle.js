@@ -1,7 +1,7 @@
 import {
-  CREATE_ARTICLE_REQUEST,
-  CREATE_ARTICLE_FAILURE,
-  CREATE_ARTICLE_SUCCESS,
+  DELETE_ARTICLE_REQUEST,
+  DELETE_ARTICLE_FAILURE,
+  DELETE_ARTICLE_SUCCESS,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -9,20 +9,20 @@ const initialState = {
   errors: '',
 };
 
-const createArticleReduser = (state = initialState, action) => {
+const deleteArticleReduser = (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_ARTICLE_REQUEST: {
+    case DELETE_ARTICLE_REQUEST: {
       return { ...state, isProcessing: true };
     }
 
-    case CREATE_ARTICLE_SUCCESS: {
+    case DELETE_ARTICLE_SUCCESS: {
       return {
         ...state,
         isProcessing: false,
       };
     }
 
-    case CREATE_ARTICLE_FAILURE: {
+    case DELETE_ARTICLE_FAILURE: {
       const { payload } = action;
       return { ...state, errors: payload, isProcessing: false };
     }
@@ -32,4 +32,4 @@ const createArticleReduser = (state = initialState, action) => {
   }
 };
 
-export default createArticleReduser;
+export default deleteArticleReduser;

@@ -1,19 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import './ArticleEditor.scss';
 import { connect } from 'react-redux';
-import './CreateArticle.scss';
+import { withRouter, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import { Input, Button } from 'antd';
 import PropTypes from 'prop-types';
-import { createArticle } from '../../redux/actions/createArticle';
-import createArticleSchema from './createArticleSchema';
+import updateArticleSchema from './updateArticleSchema';
+import getArticleFetch from '../../api/getArticle';
+import { updateArticle } from '../../redux/actions/updateArticle';
 
 const { TextArea } = Input;
 
-const initialValues = { title: '', description: '', content: '', tags: '' };
+const ArticleEditor = (props) => {
+  const {
+    match: {
+      params: { slug },
+    },
+    updateArticleFunc,
+    isProcessing,
+  } = props;
 
-const CreateArticle = (props) => {
-  const { createArticleFunc, isProcessing } = props;
+  const [article, setArticle] = useState(null);
   const [response, setResponse] = useState('');
+  const history = useHistory();
+
+  useEffect(() => {
+    getArticleFetch(slug)
+      .then((answer) => answer.data)
+      .then((data) => data.article)
+      .then((updatedArticle) => setArticle(() => updatedArticle));
+  }, [slug]);
+
+  if (article === null) {
+    return <div>Article is loading...</div>;
+  }
+
   const renderInput = (
     name,
     type,
@@ -25,10 +46,10 @@ const CreateArticle = (props) => {
     touched,
     Component
   ) => (
-    <label className="CreateArticle-Label" htmlFor={name}>
+    <label className="ArticleEditor-Label" htmlFor={name}>
       {`${label}`}
       <Component
-        className="CreateArticle-Field"
+        className="ArticleEditor-Field"
         type={type}
         name={name}
         placeholder={label}
@@ -39,39 +60,43 @@ const CreateArticle = (props) => {
         style={touched[name] && errors[name] ? { borderColor: 'red' } : {}} //
       />
       {touched[name] && errors[name] && (
-        <div className="CreateArticle-RequiredField">{errors[name]}</div>
+        <div className="ArticleEditor-RequiredField">{errors[name]}</div>
       )}
     </label>
   );
 
+  const initialValues = {
+    title: article.title,
+    description: article.description,
+    content: article.body,
+    tags: article.tagList.length > 0 ? article.tagList.join(', ') : '',
+  };
+
   const renderForm = () => {
     return (
-      <div className="CreateArticle">
-        <h1>New article</h1>
-        <div className="CreateArticle-FormWrapper">
+      <div className="ArticleEditor">
+        <h1>Update article</h1>
+        <div className="ArticleEditor-FormWrapper">
           <Formik
             initialValues={initialValues}
-            validationSchema={createArticleSchema}
-            onSubmit={(values, actions) => {
+            validationSchema={updateArticleSchema}
+            onSubmit={(values) => {
               const { title, description, content, tags } = values;
               const tagList = tags === '' ? [] : tags.split(',');
               try {
-                createArticleFunc({
-                  title,
-                  description,
-                  body: content,
-                  tagList,
+                updateArticleFunc(
+                  { title, description, body: content, tagList },
+                  article.slug
+                ).then((updatedArticle) => {
+                  history.push(`${process.env.PUBLIC_URL}/articles/${updatedArticle.slug}`);
                 });
-                setResponse(() => 'Article was created succssesfully !');
               } catch (err) {
-                setResponse(() => `Ooops somthing going wrong ${err}`);
+                setResponse(() => `Somthing going wrong: ${err}`);
               }
-
-              actions.resetForm();
             }}
           >
             {({ values, handleChange, errors, touched, handleBlur, handleSubmit }) => (
-              <Form className="CreateArticle-Form" onSubmit={handleSubmit}>
+              <Form className="ArticleEditor-Form" onSubmit={handleSubmit}>
                 {renderInput(
                   'title',
                   'text',
@@ -122,12 +147,12 @@ const CreateArticle = (props) => {
                   type="primary"
                   htmlType="submit"
                 >
-                  create article
+                  Update article
                 </Button>
               </Form>
             )}
           </Formik>
-          <div className="CreateArticle-Response">{response}</div>
+          <div className="ArticleEditor-Response">{response}</div>
         </div>
       </div>
     );
@@ -138,18 +163,18 @@ const CreateArticle = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    isProcessing: state.createArticle.isProcessing,
+    isProcessing: state.updateArticle.isProcessing,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  createArticleFunc: (data) => dispatch(createArticle(data)),
+  updateArticleFunc: (data, slug) => dispatch(updateArticle(data, slug)),
 });
 
-CreateArticle.propTypes = {
-  createAricleFunc: PropTypes.func,
+ArticleEditor.propTypes = {
+  updateAricleFunc: PropTypes.func,
   isProcessing: PropTypes.bool,
   response: PropTypes.string,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateArticle);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ArticleEditor));
