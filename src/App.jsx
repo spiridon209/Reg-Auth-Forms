@@ -10,6 +10,8 @@ import CreateArticle from './components/CreateArticle/CreateArticle';
 import { autoLogIn } from './redux/actions/auth';
 import Layout from './hoc/Layout/Layout';
 import Article from './components/Article/Article';
+import ArticleList from './components/ArticleList/ArticleList';
+import Navigation from './components/Navigation/Navigation';
 
 function App(props) {
   const { isAuth, autoLogInFunc } = props;
@@ -20,10 +22,14 @@ function App(props) {
 
   let routes = (
     <div className="App">
+      <Navigation />
       <Switch>
+        <Route exact path={`${process.env.PUBLIC_URL}/`} component={ArticleList} />
+        <Route path={`${process.env.PUBLIC_URL}/articles/:slug`} component={Article} />
         <Route exact path={`${process.env.PUBLIC_URL}/signup`} component={RegForm} />
         <Route exact path={`${process.env.PUBLIC_URL}/login`} component={AuthForm} />
-        <Redirect to={`${process.env.PUBLIC_URL}/login`} />
+        <Route exact path={`${process.env.PUBLIC_URL}/add`} component={CreateArticle} />
+        <Redirect to={`${process.env.PUBLIC_URL}/`} />
       </Switch>
     </div>
   );
@@ -31,8 +37,10 @@ function App(props) {
   if (isAuth) {
     routes = (
       <div className="App">
+        <Navigation />
+        <UserBio />
         <Switch>
-          <Route exact path={`${process.env.PUBLIC_URL}/`} component={UserBio} />
+          <Route exact path={`${process.env.PUBLIC_URL}/`} component={ArticleList} />
           <Route exact path={`${process.env.PUBLIC_URL}/articles/:slug`} component={Article} />
           <Route exact path={`${process.env.PUBLIC_URL}/add`} component={CreateArticle} />
           <Redirect to={`${process.env.PUBLIC_URL}/`} />

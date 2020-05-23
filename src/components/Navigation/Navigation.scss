@@ -1,0 +1,21 @@
+.Navigation {
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  &-Link {
+    border: 1px solid black;
+    font-size: 20px;
+    margin-right: 20px;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+  }
+
+  .active {
+    background-color: rgba($color: #f4fafa, $alpha: 1);
+    color: rgb(13, 101, 141);
+  }
+}

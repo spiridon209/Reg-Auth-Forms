@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ArticlePreview from '../ArticlePreview/ArticlePreview';
 import { getArticles } from '../../redux/actions/getArticles';
 import ArticlesPagination from '../ArticlesPagination/ArticlesPagination';
+import './ArticleList.scss';
 
 const ArticleList = (props) => {
   const { articles, isLoading, errors, getArticlesFunc, offset } = props;
@@ -21,7 +22,7 @@ const ArticleList = (props) => {
   }
 
   return (
-    <div>
+    <div className="ArticleList">
       {articles.map((article) => (
         <ArticlePreview key={article.slug} article={article} />
       ))}
