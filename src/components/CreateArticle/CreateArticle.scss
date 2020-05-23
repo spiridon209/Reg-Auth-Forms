@@ -1,0 +1,29 @@
+.CreateArticle {
+  border: 1px solid black;
+  border-radius: 3px;
+  margin-top: 15px;
+  padding: 10px;
+  background-color: white;
+  max-width: 800px;
+  width: 100%;
+
+  &-Form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    min-height: 410px;
+  }
+
+  &-Label {
+    width: 100%;
+    text-align: start;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  &-RequiredField {
+    color: red;
+  }
+}

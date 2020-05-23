@@ -38,16 +38,16 @@ const CreateArticle = (props) => {
         style={touched[name] && errors[name] ? { borderColor: 'red' } : {}} //
       />
       {touched[name] && errors[name] && (
-        <div className="CreateArticle-RequredField">{errors[name]}</div>
+        <div className="CreateArticle-RequiredField">{errors[name]}</div>
       )}
     </label>
   );
 
   const renderForm = () => {
     return (
-      <>
+      <div className="CreateArticle">
         <h1>New article</h1>
-        <div className="CreateArticleWrapper">
+        <div className="CreateArticle-FormWrapper">
           <Formik
             initialValues={initialValues}
             validationSchema={createArticleSchema}
@@ -59,7 +59,7 @@ const CreateArticle = (props) => {
             }}
           >
             {({ values, handleChange, errors, touched, handleBlur, handleSubmit }) => (
-              <Form className="CreateArticleForm" onSubmit={handleSubmit}>
+              <Form className="CreateArticle-Form" onSubmit={handleSubmit}>
                 {renderInput(
                   'title',
                   'text',
@@ -116,7 +116,7 @@ const CreateArticle = (props) => {
             )}
           </Formik>
         </div>
-      </>
+      </div>
     );
   };
 
