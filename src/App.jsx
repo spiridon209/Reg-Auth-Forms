@@ -23,7 +23,7 @@ function App(props) {
 
   let routes = (
     <div className="App">
-      <Navigation />
+      <Navigation isLogIn={false} />
       <Switch>
         <Route exact path={`${process.env.PUBLIC_URL}/`} component={ArticleList} />
         <Route path={`${process.env.PUBLIC_URL}/articles/:slug`} component={Article} />
@@ -38,7 +38,7 @@ function App(props) {
   if (isAuth) {
     routes = (
       <div className="App">
-        <Navigation />
+        <Navigation isLogIn />
         <UserBio />
         <Switch>
           <Route exact path={`${process.env.PUBLIC_URL}/`} component={ArticleList} />

@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Navigation.scss';
 
@@ -37,14 +36,14 @@ const Navigation = (props) => {
   return links;
 };
 
-const mapDispatchToProps = (state) => {
-  return {
-    isLogIn: state.auth.isLogIn,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     isLogIn: state.auth.isLogIn,
+//   };
+// };
 
 Navigation.propTypes = {
-  isLogin: PropTypes.bool.isRequired,
+  isLogIn: PropTypes.bool.isRequired,
 };
 
-export default connect(mapDispatchToProps)(Navigation);
+export default Navigation;
