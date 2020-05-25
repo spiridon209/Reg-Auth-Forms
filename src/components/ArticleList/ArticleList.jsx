@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
   return {
     articles: state.getArticles.articles,
     isLoading: state.getArticles.isLoading,
-    errors: state.getArticles.isLoading,
+    errors: state.getArticles.errors,
     offset:
       state.getArticles.currentPage === 1
         ? 0

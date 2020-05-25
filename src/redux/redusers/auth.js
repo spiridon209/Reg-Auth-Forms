@@ -13,6 +13,7 @@ const initialState = {
   id: null,
   errors: '',
   isProcessing: false,
+  isLogIn: false,
 };
 
 const authReduser = (state = initialState, action) => {

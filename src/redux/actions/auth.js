@@ -64,7 +64,7 @@ export const autoLogIn = () => {
     dispatch(authRequest(true));
     try {
       const TOKEN = localStorage.getItem('token');
-      if (TOKEN === null) {
+      if (!TOKEN) {
         dispatch(logOut());
         return;
       }
