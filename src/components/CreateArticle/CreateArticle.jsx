@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import './CreateArticle.scss';
 import { Formik, Form } from 'formik';
 import { Input, Button } from 'antd';
@@ -12,6 +13,7 @@ const { TextArea } = Input;
 const initialValues = { title: '', description: '', content: '', tags: '' };
 
 const CreateArticle = (props) => {
+  const history = useHistory();
   const { createArticleFunc, isProcessing } = props;
   const [response, setResponse] = useState('');
   const renderInput = (
@@ -66,8 +68,8 @@ const CreateArticle = (props) => {
               } catch (err) {
                 setResponse(() => `Ooops somthing going wrong ${err}`);
               }
-
               actions.resetForm();
+              history.push(`${process.env.PUBLIC_URL}/`);
             }}
           >
             {({ values, handleChange, errors, touched, handleBlur, handleSubmit }) => (

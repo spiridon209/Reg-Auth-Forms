@@ -36,12 +36,6 @@ const Navigation = (props) => {
   return links;
 };
 
-// const mapStateToProps = (state) => {
-//   return {
-//     isLogIn: state.auth.isLogIn,
-//   };
-// };
-
 Navigation.propTypes = {
   isLogIn: PropTypes.bool.isRequired,
 };

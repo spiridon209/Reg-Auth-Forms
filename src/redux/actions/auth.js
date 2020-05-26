@@ -53,7 +53,7 @@ export const reg = (mail, password, name) => {
 
 export const logOut = () => {
   removeToken();
-  localStorage.removeItem('userId');
+
   return {
     type: LOG_OUT,
   };
