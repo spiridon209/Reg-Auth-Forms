@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { Button } from 'antd';
 import PropTypes from 'prop-types';
 import { logOut } from '../../redux/actions/auth';
@@ -11,8 +10,6 @@ const UserBio = (props) => {
 
   const logOutHandler = () => {
     logOutFunc();
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
   };
 
   const renderUserBio = () => {

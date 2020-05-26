@@ -1,11 +1,10 @@
 import axios from 'axios';
-import rootApiUrl from './rootApiUrl';
-
-// axios.defaults.headers.common.Authorization = `Token ${token}`;
+import urls from './apiUrls';
+import { getToken } from '../localStorage';
 
 const deleteArticleFetch = async (slug) => {
-  const deleteArticleUrl = `${rootApiUrl}/articles/${slug}`;
-  const token = localStorage.getItem('token');
+  const deleteArticleUrl = urls.getArticlePath(slug);
+  const token = getToken();
   const headers = { Authorization: `Token ${token}` };
   const response = await axios.delete(
     deleteArticleUrl,

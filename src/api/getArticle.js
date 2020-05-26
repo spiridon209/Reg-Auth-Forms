@@ -1,15 +1,16 @@
 import axios from 'axios';
-import rootApiUrl from './rootApiUrl';
+import urls from './apiUrls';
+import { getToken } from '../localStorage';
 
 const getArticleFetch = async (slug) => {
-  const token = localStorage.getItem('token');
+  const token = getToken();
   const headers = { Authorization: `Token ${token}` };
-  const getArticleListUrl = `${rootApiUrl}/articles/${slug}`;
+  const getArticleUrl = urls.getArticlePath(slug);
   if (!token) {
-    const response = await axios.get(getArticleListUrl);
+    const response = await axios.get(getArticleUrl);
     return response;
   }
-  const response = await axios.get(getArticleListUrl, { headers });
+  const response = await axios.get(getArticleUrl, { headers });
   return response;
 };
 

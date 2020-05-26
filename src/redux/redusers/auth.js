@@ -9,8 +9,6 @@ import {
 const initialState = {
   token: null,
   username: '',
-  email: '',
-  id: null,
   errors: '',
   isProcessing: false,
   isLogIn: false,
