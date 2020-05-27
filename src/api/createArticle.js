@@ -1,12 +1,11 @@
 import axios from 'axios';
-import rootApiUrl from './rootApiUrl';
+import urls from './apiUrls';
+import { getToken } from '../localStorage';
 
-const createArticleUrl = `${rootApiUrl}/articles`;
-
-// axios.defaults.headers.common.Authorization = `Token ${token}`;
+const createArticleUrl = urls.getCreateArticlePath();
 
 const createArticleFetch = async (data) => {
-  const token = localStorage.getItem('token');
+  const token = getToken();
   const headers = { Authorization: `Token ${token}` };
   const response = await axios.post(
     createArticleUrl,

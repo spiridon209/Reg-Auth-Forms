@@ -1,8 +1,8 @@
 import axios from 'axios';
-import rootApiUrl from './rootApiUrl';
+import urls from './apiUrls';
 
 export const authFetch = async (data) => {
-  const authUrl = `${rootApiUrl}/users/login`;
+  const authUrl = urls.getLoginPath();
   const response = await axios.post(authUrl, {
     user: data,
   });
@@ -10,7 +10,7 @@ export const authFetch = async (data) => {
 };
 
 export const regFetch = async (data) => {
-  const regUrl = `${rootApiUrl}/users`;
+  const regUrl = urls.getSignupPath();
   const response = await axios.post(regUrl, {
     user: data,
   });
@@ -18,7 +18,7 @@ export const regFetch = async (data) => {
 };
 
 export const autoLogInFetch = async (headers) => {
-  const autoLogInUrl = `${rootApiUrl}/user`;
+  const autoLogInUrl = urls.getAutoLoginPath();
   const response = await axios.get(autoLogInUrl, { headers });
   return response;
 };

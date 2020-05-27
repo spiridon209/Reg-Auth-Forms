@@ -2,6 +2,10 @@ export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
 export const AUTH_SUCCESS = 'AUTH_SUCCES';
 
+export const REG_REQUEST = 'REG_REQUEST';
+export const REG_FAILURE = 'REG_FAILURE';
+export const REG_SUCCESS = 'REG_SUCCES';
+
 export const LOG_OUT = 'LOG_OUT';
 export const RESET_ERRORS = 'RESET_ERRORS';
 
