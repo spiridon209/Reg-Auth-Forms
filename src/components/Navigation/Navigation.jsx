@@ -2,38 +2,37 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './Navigation.scss';
+import routesPaths from '../../routesPaths';
 
 const Navigation = (props) => {
   const { isLogIn } = props;
 
-  let links = (
+  const notAuthLinks = (
     <nav className="Navigation">
-      <NavLink exact className="Navigation-Link" to={`${process.env.PUBLIC_URL}/`}>
+      <NavLink exact className="Navigation-Link" to={routesPaths.getHome()}>
         Home page
       </NavLink>
-      <NavLink className="Navigation-Link" to={`${process.env.PUBLIC_URL}/login`}>
+      <NavLink className="Navigation-Link" to={routesPaths.getAuth()}>
         Log in
       </NavLink>
-      <NavLink className="Navigation-Link" to={`${process.env.PUBLIC_URL}/signup`}>
+      <NavLink className="Navigation-Link" to={routesPaths.getReg()}>
         Signup
       </NavLink>
     </nav>
   );
 
-  if (isLogIn) {
-    links = (
-      <nav className="Navigation">
-        <NavLink className="Navigation-Link" to={`${process.env.PUBLIC_URL}/`} exact>
-          Home page
-        </NavLink>
-        <NavLink className="Navigation-Link" to={`${process.env.PUBLIC_URL}/add`}>
-          Create article
-        </NavLink>
-      </nav>
-    );
-  }
+  const authLinks = (
+    <nav className="Navigation">
+      <NavLink className="Navigation-Link" to={routesPaths.getHome()} exact>
+        Home page
+      </NavLink>
+      <NavLink className="Navigation-Link" to={routesPaths.getCreateArticle()}>
+        Create article
+      </NavLink>
+    </nav>
+  );
 
-  return links;
+  return isLogIn ? authLinks : notAuthLinks;
 };
 
 Navigation.propTypes = {

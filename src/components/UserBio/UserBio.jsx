@@ -6,7 +6,7 @@ import { logOut } from '../../redux/actions/auth';
 import './UserBio.scss';
 
 const UserBio = (props) => {
-  const { username, logOutFunc } = props;
+  const { username, logOutFunc, isLogin } = props;
 
   const logOutHandler = () => {
     logOutFunc();
@@ -23,7 +23,7 @@ const UserBio = (props) => {
     );
   };
 
-  return renderUserBio();
+  return isLogin ? renderUserBio() : null;
 };
 
 const mapStateToProps = (state) => {

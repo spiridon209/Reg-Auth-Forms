@@ -1,7 +1,7 @@
 import './App.scss';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RegForm from './components/RegForm/RegForm';
 import AuthForm from './components/AuthForm/AuthForm';
@@ -13,6 +13,9 @@ import Article from './components/Article/Article';
 import ArticleList from './components/ArticleList/ArticleList';
 import Navigation from './components/Navigation/Navigation';
 import ArticleEditor from './components/ArticleEditor/ArticleEditor';
+import routesPaths from './routesPaths';
+import PublicRoute from './hoc/PublicRoute/PublicRoute';
+import PrivateRoute from './hoc/PrivateRoute/PrivateRoute';
 
 function App(props) {
   const { isAuth, autoLogInFunc } = props;
@@ -21,39 +24,56 @@ function App(props) {
     autoLogInFunc();
   });
 
-  let routes = (
+  const routes = (
     <div className="App">
-      <Navigation isLogIn={false} />
+      <Navigation isLogIn={isAuth} />
+      <UserBio isLogin={isAuth} />
       <Switch>
-        <Route exact path={`${process.env.PUBLIC_URL}/`} component={ArticleList} />
-        <Route path={`${process.env.PUBLIC_URL}/articles/:slug`} component={Article} />
-        <Route exact path={`${process.env.PUBLIC_URL}/signup`} component={RegForm} />
-        <Route exact path={`${process.env.PUBLIC_URL}/login`} component={AuthForm} />
-        <Route exact path={`${process.env.PUBLIC_URL}/add`} component={CreateArticle} />
-        <Redirect to={`${process.env.PUBLIC_URL}/`} />
+        <PublicRoute
+          exact
+          path={routesPaths.getHome()}
+          isLogin={isAuth}
+          restricted={false}
+          component={ArticleList}
+        />
+        <PublicRoute
+          exact
+          path={routesPaths.getArticle()}
+          isLogin={isAuth}
+          restricted={false}
+          component={Article}
+        />
+        <PublicRoute
+          exact
+          path={routesPaths.getReg()}
+          isLogin={isAuth}
+          restricted
+          component={RegForm}
+        />
+        <PublicRoute
+          exact
+          path={routesPaths.getAuth()}
+          isLogin={isAuth}
+          restricted
+          component={AuthForm}
+        />
+        <PrivateRoute
+          exact
+          path={routesPaths.getArticleEditor()}
+          isLogin={isAuth}
+          component={ArticleEditor}
+        />
+        <PrivateRoute
+          exact
+          path={routesPaths.getCreateArticle()}
+          isLogin={isAuth}
+          component={CreateArticle}
+        />
+
+        <Redirect to={routesPaths.getHome()} />
       </Switch>
     </div>
   );
-
-  if (isAuth) {
-    routes = (
-      <div className="App">
-        <Navigation isLogIn />
-        <UserBio />
-        <Switch>
-          <Route exact path={`${process.env.PUBLIC_URL}/`} component={ArticleList} />
-          <Route exact path={`${process.env.PUBLIC_URL}/articles/:slug`} component={Article} />
-          <Route
-            exact
-            path={`${process.env.PUBLIC_URL}/articles/:slug/edit`}
-            component={ArticleEditor}
-          />
-          <Route exact path={`${process.env.PUBLIC_URL}/add`} component={CreateArticle} />
-          <Redirect to={`${process.env.PUBLIC_URL}/`} />
-        </Switch>
-      </div>
-    );
-  }
 
   return <Layout>{routes}</Layout>;
 }
